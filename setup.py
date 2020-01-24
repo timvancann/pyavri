@@ -5,11 +5,11 @@ with open("README.md", "r") as f:
 
 setup(
     name="avri-api",
-    version="0.1.0",
+    version="0.1.1",
     description="Unofficial wrapper around Avri endpoints",
     author="Tim van Cann",
     author_email="timvancann@gmail.com",
-    packages=find_packages(exclude=("tests",)),
+    packages=['avri'],
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/timvancann/sampleproject",
