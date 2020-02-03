@@ -15,7 +15,7 @@ BASE_URL = ('https://dataservice.deafvalapp.nl/dataservice/DataServiceServlet'
 
 SCHEDULE = 'OPHAALSCHEMA'
 
-CACHE_LIMIT_DAYS = 14
+CACHE_LIMIT_DAYS = 6
 
 
 @dataclass(frozen=True)
@@ -79,18 +79,26 @@ class Avri:
         return (seq(content.split('\n'))
                 .flat_map(parse_row))
 
-    def upcoming(self):
+    @staticmethod
+    def today_midnight():
+        return datetime.combine(datetime.now(), datetime.min.time())
+
+    def upcoming(self, dt: datetime = None):
+        if not dt:
+            dt = self.today_midnight()
         data = self.get_data()
         return (seq(data)
-                .filter(lambda g: g.day >= datetime.now())
+                .filter(lambda g: g.day >= dt)
                 .sorted(lambda g: g.day)
                 .first()
                 )
 
-    def upcoming_of_each(self):
+    def upcoming_of_each(self, dt: datetime = None):
+        if not dt:
+            dt = self.today_midnight()
         data = self.get_data()
         return (seq(data)
-                .filter(lambda g: g.day >= datetime.now())
+                .filter(lambda g: g.day >= dt)
                 .sorted(lambda g: g.day)
                 .map(lambda g: (g.name, g.day))
                 .reduce_by_key(lambda x, y: min(x, y))
