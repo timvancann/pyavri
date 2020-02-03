@@ -5,7 +5,7 @@ Unofficial wrapper around the [Avri](https://avri.nl/) API, for automation purpo
 ## Usage
 
 ```bash
-pip install avri-api==0.1.1
+pip install avri-api==0.1.2
 ```
 
 Initialize the client with you `postal code` and `house number`. Optionally provide a `house_nr_extension` and/or a `country_code`.
