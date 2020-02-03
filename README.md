@@ -1,11 +1,14 @@
 # Python Avri API
 
+[![Build Status](https://dev.azure.com/timvancann/timvancann/_apis/build/status/timvancann.pyavri?branchName=master)](https://dev.azure.com/timvancann/timvancann/_build/latest?definitionId=1&branchName=master)
+[![PyPI](https://img.shields.io/pypi/v/avri-api)](https://pypi.org/project/avri-api/)
+
 Unofficial wrapper around the [Avri](https://avri.nl/) API, for automation purposes.
 
 ## Usage
 
 ```bash
-pip install avri-api==0.1.3
+pip install avri-api
 ```
 
 Initialize the client with you `postal code` and `house number`. Optionally provide a `house_nr_extension` and/or a `country_code`.
