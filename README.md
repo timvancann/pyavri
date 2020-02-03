@@ -5,7 +5,7 @@ Unofficial wrapper around the [Avri](https://avri.nl/) API, for automation purpo
 ## Usage
 
 ```bash
-pip install avri-api==0.1.2
+pip install avri-api==0.1.3
 ```
 
 Initialize the client with you `postal code` and `house number`. Optionally provide a `house_nr_extension` and/or a `country_code`.
@@ -19,6 +19,7 @@ Exposes the following functions:
 - ```client.upcoming_of_each()``` returns first upcoming collecting day for each garbage type in a `List[Garbage]` object
 - ```client.all()``` returns all upcoming collecting days in a `List[Garbage]` object
 
+Both `upcoming` and `upcoming_of_each` contain today's pickup.
 
 ### The `Garbage` object
 
@@ -27,4 +28,4 @@ Contains
 - `day`: A python datetime object representing the collecting date.
 
 ## In a long living process
-Data is cached for `14` days before it's refreshed to reduce the number of API calls made.
+Data is cached for `6` days before it's refreshed to reduce the number of API calls made.

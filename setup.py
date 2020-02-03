@@ -1,11 +1,11 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 with open("README.md", "r") as f:
     long_description = f.read()
 
 setup(
     name="avri-api",
-    version="0.1.2",
+    version="0.1.3",
     description="Unofficial wrapper around Avri endpoints",
     author="Tim van Cann",
     author_email="timvancann@gmail.com",
