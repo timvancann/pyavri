@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="avri-api",
-    version="0.1.3",
+    version="0.1.5",
     description="Unofficial wrapper around Avri endpoints",
     author="Tim van Cann",
     author_email="timvancann@gmail.com",

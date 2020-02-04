@@ -35,7 +35,12 @@ class AvriException(Exception):
 
 
 class Avri:
-    def __init__(self, postal_code: str, house_nr: str, house_nr_extension: str = '', country_code='NL'):
+    def __init__(self, postal_code: str,
+                 house_nr: str,
+                 house_nr_extension: Optional[str] = None,
+                 country_code='NL'):
+        if not house_nr_extension:
+            house_nr_extension = ''
         self.postal_code = self.clean_postal_code(postal_code)
         self.house_nr = house_nr
         self.house_nr_extension = house_nr_extension
@@ -59,14 +64,17 @@ class Avri:
         return self._cache.data
 
     def perform_request(self):
-        return (requests.get(BASE_URL.format(service=SCHEDULE,
-                                             country_code=self.country_code,
-                                             postal_code=self.postal_code,
-                                             house_nr=self.house_nr,
-                                             house_nr_extension=self.house_nr_extension))
-                .content
-                .decode()
-                )
+        try:
+            return (requests.get(BASE_URL.format(service=SCHEDULE,
+                                                 country_code=self.country_code,
+                                                 postal_code=self.postal_code,
+                                                 house_nr=self.house_nr,
+                                                 house_nr_extension=self.house_nr_extension))
+                    .content
+                    .decode()
+                    )
+        except Exception as e:
+            raise AvriException("Something went wrong contacting the Avri API") from e
 
     @staticmethod
     def parse_content(content: str):
