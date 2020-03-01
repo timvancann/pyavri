@@ -4,6 +4,7 @@ from typing import Optional, List
 
 import requests
 from functional import seq
+from requests.exceptions import SSLError
 
 BASE_URL = ('https://dataservice.deafvalapp.nl/dataservice/DataServiceServlet'
             '?service={service}'
@@ -63,18 +64,23 @@ class Avri:
             self._cache = Cache(self.parse_content(data), datetime.now())
         return self._cache.data
 
-    def perform_request(self):
+    def perform_request(self, verify=True):
         try:
-            return (requests.get(BASE_URL.format(service=SCHEDULE,
-                                                 country_code=self.country_code,
-                                                 postal_code=self.postal_code,
-                                                 house_nr=self.house_nr,
-                                                 house_nr_extension=self.house_nr_extension))
-                    .content
-                    .decode()
-                    )
+            content = requests.get(
+                BASE_URL.format(service=SCHEDULE,
+                                country_code=self.country_code,
+                                postal_code=self.postal_code,
+                                house_nr=self.house_nr,
+                                house_nr_extension=self.house_nr_extension),
+                verify=verify).content
+        except SSLError as e:
+            if verify:
+                return self.perform_request(verify=False)
+            raise AvriException("Something went wrong contacting the Avri API") from e
         except Exception as e:
             raise AvriException("Something went wrong contacting the Avri API") from e
+        else:
+            return content.decode()
 
     @staticmethod
     def parse_content(content: str):
