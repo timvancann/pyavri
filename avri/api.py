@@ -30,9 +30,9 @@ class AvriException(Exception):
 
 class Avri:
     def __init__(
-            self,
-            postal_code: str,
-            house_nr: int,
+        self,
+        postal_code: str,
+        house_nr: int,
     ):
         self.postal_code = self.clean_postal_code(postal_code)
         self.house_nr = house_nr
@@ -94,9 +94,9 @@ class Avri:
             return datetime.strptime(date, "%Y-%m-%dT%H:%M:%S")
 
         parsed = (
-            seq(content["dataList"])
-                .flat_map(lambda t: [Garbage(t["_pickupTypeText"], parse_date(d)) for d in t["pickupDates"]]
-                          )
+            seq(content["dataList"]).flat_map(
+                lambda t: [Garbage(t["_pickupTypeText"], parse_date(d)) for d in t["pickupDates"]]
+            )
         ).to_list()
 
         return parsed
@@ -109,12 +109,7 @@ class Avri:
         if not dt:
             dt = self._today_midnight()
         data = self.get_pickup_dates()
-        return (
-            seq(data)
-                .filter(lambda g: g.day >= dt)
-                .sorted(lambda g: g.day)
-                .first()
-        )
+        return seq(data).filter(lambda g: g.day >= dt).sorted(lambda g: g.day).first()
 
     def upcoming_of_each(self, dt: datetime = None):
         if not dt:
@@ -122,12 +117,12 @@ class Avri:
         data = self.get_pickup_dates()
         return (
             seq(data)
-                .filter(lambda g: g.day >= dt)
-                .sorted(lambda g: g.day)
-                .map(lambda g: (g.name, g.day))
-                .reduce_by_key(lambda x, y: min(x, y))
-                .map(lambda arg: Garbage(*arg))
-                .list()
+            .filter(lambda g: g.day >= dt)
+            .sorted(lambda g: g.day)
+            .map(lambda g: (g.name, g.day))
+            .reduce_by_key(lambda x, y: min(x, y))
+            .map(lambda arg: Garbage(*arg))
+            .list()
         )
 
     def all_upcoming(self):

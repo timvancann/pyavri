@@ -38,7 +38,7 @@ def fake_calendar():
                 ],
                 "pickupType": 10,
                 "_pickupTypeText": "PACKAGES",
-            }
+            },
         ],
     }
 
@@ -72,17 +72,21 @@ def test_parse_content(fake_calendar):
 
 def test_parse_address(fake_address_id):
     with requests_mock.Mocker() as m:
-        m.post(f'{BASE_URL}{FETCH_ADDRESS}', content=json.dumps(fake_address_id).encode())
+        m.post(f"{BASE_URL}{FETCH_ADDRESS}", content=json.dumps(fake_address_id).encode())
         client = api.Avri("1234AB", 42)
         assert client.get_address_id() == "dave"
 
 
 def test_upcoming_new(client_with_cache):
-    assert client_with_cache.upcoming(datetime(2021, 1, 21)) == Garbage("GREEN", datetime(2021, 1, 21))
+    assert client_with_cache.upcoming(datetime(2021, 1, 21)) == Garbage(
+        "GREEN", datetime(2021, 1, 21)
+    )
 
 
 def test_upcoming_today(client_with_cache):
-    assert client_with_cache.upcoming(datetime(2021, 2, 9)) == Garbage("PACKAGES", datetime(2021, 2, 9))
+    assert client_with_cache.upcoming(datetime(2021, 2, 9)) == Garbage(
+        "PACKAGES", datetime(2021, 2, 9)
+    )
 
 
 def test_upcoming_of_each_new(client_with_cache):
