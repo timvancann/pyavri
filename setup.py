@@ -3,6 +3,14 @@ from setuptools import setup
 with open("README.md", "r") as f:
     long_description = f.read()
 
+dependencies = [
+    "requests>=2.22.0",
+    "pyfunctional>=1.3.0"
+]
+test_dependencies = [
+    "requests-mock==1.8.0"
+]
+
 setup(
     name="avri-api",
     version="0.1.8",
@@ -19,6 +27,8 @@ setup(
         "Operating System :: OS Independent",
     ],
     python_requires=">=3.7",
-    install_requires=["requests>=2.22.0", "pyfunctional>=1.3.0"],
-    test_requires=["requests-mock==1.8.0"],
+    install_requires=dependencies,
+    extras_require={
+        'test': test_dependencies
+    },
 )
