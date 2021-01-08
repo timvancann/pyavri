@@ -20,7 +20,7 @@ setup(
     ],
     python_requires='>=3.7',
     install_requires=[
-        "requests==2.22.0",
-        "pyfunctional==1.3.0"
+        "requests>=2.22.0",
+        "pyfunctional>=1.3.0"
     ]
 )
