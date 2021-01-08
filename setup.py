@@ -8,7 +8,8 @@ dependencies = [
     "pyfunctional>=1.3.0"
 ]
 test_dependencies = [
-    "requests-mock==1.8.0"
+    "requests-mock>=1.8.0",
+    "pytest>=3.1.1"
 ]
 
 setup(
